@@ -1,0 +1,39 @@
+{
+	"name": "@johnie/fejk",
+	"version": "1.0.0",
+	"description": "Reverse engineered cli and package for fejk.se",
+	"main": "index.js",
+	"repository": "johnie/fejk",
+	"author": {
+		"name": "Johnie Hjelm",
+		"email": "johnie@hjelm.im",
+		"url": "johnie.se"
+	},
+	"bin": {
+		"fejk": "cli.js"
+	},
+	"engines": {
+		"node": ">=8"
+	},
+	"scripts": {
+		"test": "xo && ava"
+	},
+	"files": [
+		"cli.js"
+	],
+	"keywords": [],
+	"license": "MIT",
+	"dependencies": {
+		"cheerio": "^1.0.0-rc.3",
+		"cli-table3": "^0.5.1",
+		"clipboardy": "^2.0.0",
+		"got": "^9.6.0",
+		"meow": "^5.0.0"
+	},
+	"devDependencies": {
+		"ava": "^1.2.0",
+		"create-test-server": "^2.4.0",
+		"execa": "^1.0.0",
+		"xo": "^0.24.0"
+	}
+}
