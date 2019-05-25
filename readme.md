@@ -4,8 +4,16 @@
 
 ## Install
 
+### Package
+
 ```
-$ npm install --global @johnie/fejk
+$ npm install --save fejk-cli
+```
+
+### CLI
+
+```
+$ npm install --global fejk-cli
 ```
 
 ## Usage

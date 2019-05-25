@@ -1,5 +1,5 @@
 {
-  "name": "@johnie/fejk",
+  "name": "fejk-cli",
   "version": "1.0.0",
   "description": "Reverse engineered cli and package for fejk.se",
   "main": "index.js",
