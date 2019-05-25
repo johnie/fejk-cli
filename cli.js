@@ -1,43 +1,47 @@
 #!/usr/bin/env node
 'use strict';
-const fejk = require('./');
 const meow = require('meow');
+const jsome = require('jsome');
 const Table = require('cli-table3');
 const clipboardy = require('clipboardy');
+const fejk = require('.');
 
 (async () => {
-	const cli = meow(`
+  const cli = meow(`
 	Usage
-	  $ fejk <file> …
+	  $ fejk …
 	Options
-	  --ext  File extension for stdin
+		--table:default get fejk data in a table format
+		--raw get fejk data in a raw json format
+		--key get specific key form fejk data
+		  --copy get the key value copied to the cliboard
 	Examples
-	  $ fejk unicorn.js:5:3 readme.md:10:2
-	  $ echo '<h1>Unicorns!</h1>' | fejk --ext=html
+		$ fejk --raw
+		$ fejk --key=mail --copy
 `);
 
-	const fejkData = await fejk();
+  const fejkData = await fejk();
 
-	if (cli.flags.raw) {
-		console.log(fejkData);
-	}
+  if (Object.keys(cli.flags).length === 0 || cli.flags.table) {
+    const table = new Table();
+    const tableData = Object.entries(fejkData.data);
+    table.push(...tableData);
+    console.log(table.toString());
+  }
 
-	if (cli.flags.table) {
-		const table = new Table();
-		const tableData = Object.entries(fejkData.data);
-		table.push(...tableData);
-		console.log(table.toString());
-	}
+  if (cli.flags.raw) {
+    jsome(fejkData);
+  }
 
-	if (cli.flags.key) {
-		const item = fejkData.data[cli.flags.key];
-		if (item) {
-			console.log(item);
-			if (cli.flags.copy) {
-				await clipboardy.write(item);
-			}
-		} else {
-			console.log('Could not find key');
-		}
-	}
+  if (cli.flags.key) {
+    const item = fejkData.data[cli.flags.key];
+    if (item) {
+      console.log(item);
+      if (cli.flags.copy) {
+        await clipboardy.write(item);
+      }
+    } else {
+      console.log('Could not find key');
+    }
+  }
 })();
