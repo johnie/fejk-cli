@@ -19,15 +19,16 @@ $ npm install --global fejk-cli
 ## Usage
 
 ```
-$ open-shortcut --help
-
-  Usage
-    $ open-shortcut <filepath>
-
-  Example
-    $ open-shortcut google
-
-  Leave out the extension for cross-platform compatibility
+	Usage
+	  $ fejk …
+	Options
+		--table:default get fejk data in a table format
+		--raw get fejk data in a raw json format
+		--key get specific key form fejk data
+		  --copy get the key value copied to the cliboard
+	Examples
+		$ fejk --raw
+		$ fejk --key=mail --copy
 ```
 
 ## License
