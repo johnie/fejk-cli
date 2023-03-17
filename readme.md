@@ -1,4 +1,4 @@
-# fejk-cli [![Build Status](https://travis-ci.org/johnie/fejk-cli.svg?branch=master)](https://travis-ci.org/johnie/fejk-cli)
+# fejk-cli [![fejk-cli](https://github.com/johnie/fejk-cli/actions/workflows/master.yml/badge.svg?branch=master)](https://github.com/johnie/fejk-cli/actions/workflows/master.yml)
 
 > Reverse engineered cli and package for [fejk.se](https://fejk.se)
 
