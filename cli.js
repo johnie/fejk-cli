@@ -1,28 +1,50 @@
 #!/usr/bin/env node
-'use strict';
-const meow = require('meow');
-const jsome = require('jsome');
-const Table = require('cli-table3');
-const clipboardy = require('clipboardy');
-const fejk = require('.');
+import meow from 'meow';
+import jsome from 'jsome';
+import Table from 'cli-table3';
+import clipboardy from 'clipboardy';
+import fejk from './index.js';
 
-(async () => {
-  const cli = meow(`
-	Usage
-	  $ fejk …
-	Options
-		--table:default get fejk data in a table format
-		--raw get fejk data in a raw json format
-		--key get specific key form fejk data
-		  --copy get the key value copied to the cliboard
-	Examples
-		$ fejk --raw
-		$ fejk --key=mail --copy
-`);
+const cliProgram = async () => {
+  const cli = meow(
+    `
+  Usage
+    $ fejk …
+  Options
+    --table:default get fejk data in a table format
+    --raw get fejk data in a raw json format
+    --key get specific key form fejk data
+    --copy get the key value copied to the cliboard
+  Examples
+    $ fejk --raw
+    $ fejk --key=mail --copy
+`,
+    {
+      importMeta: import.meta,
+      flags: {
+        table: {
+          type: 'boolean',
+        },
+        raw: {
+          type: 'boolean',
+        },
+        key: {
+          type: 'string',
+        },
+        copy: {
+          type: 'boolean',
+        },
+      },
+    }
+  );
 
   const fejkData = await fejk();
 
-  if (Object.keys(cli.flags).length === 0 || cli.flags.table) {
+  if (Object.values(cli.flags).every((flag) => !flag)) {
+    cli.showHelp();
+  }
+
+  if (cli.flags.table) {
     const table = new Table();
     const tableData = Object.entries(fejkData.data);
     table.push(...tableData);
@@ -35,13 +57,16 @@ const fejk = require('.');
 
   if (cli.flags.key) {
     const item = fejkData.data[cli.flags.key];
-    if (item) {
-      console.log(item);
-      if (cli.flags.copy) {
-        await clipboardy.write(item);
-      }
-    } else {
-      console.log('Could not find key');
+    if (!item) {
+      console.log(`No key named ${cli.flags.key} found`);
+    }
+
+    console.log(item);
+
+    if (cli.flags.copy) {
+      await clipboardy.write(item);
     }
   }
-})();
+};
+
+cliProgram();
