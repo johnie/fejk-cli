@@ -1,7 +1,7 @@
 import test from 'ava';
-import execa from 'execa';
+import { execa } from 'execa';
 
-test('main', async t => {
-  const fejk = await execa('./cli.js');
+test('main', async (t) => {
+  const fejk = await execa('./cli.js', ['--table']);
   t.true(fejk.stdout.length > 0);
 });

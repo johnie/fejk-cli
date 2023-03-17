@@ -1,7 +1,7 @@
-const got = require('got');
-const cheerio = require('cheerio');
+import got from 'got';
+import cheerio from 'cheerio';
 
-const formatKeyName = name => {
+const formatKeyName = (name) => {
   return name
     .toLowerCase()
     .replace(/\s/g, '_')
@@ -16,13 +16,10 @@ const fejk = async () => {
   const $ = await cheerio.load(request.body);
 
   function mapData() {
-    const [key, value] = $(this)
-      .children()
-      .text()
-      .split(':');
+    const [key, value] = $(this).children().text().split(':');
 
     return {
-      [formatKeyName(key)]: value
+      [formatKeyName(key)]: value,
     };
   }
 
@@ -34,8 +31,8 @@ const fejk = async () => {
     }, {});
 
   return {
-    data
+    data,
   };
 };
 
-module.exports = fejk;
+export default fejk;
