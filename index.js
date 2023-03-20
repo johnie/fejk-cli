@@ -1,5 +1,5 @@
-import got from 'got';
-import cheerio from 'cheerio';
+import fetch from 'isomorphic-unfetch';
+import * as cheerio from 'cheerio';
 
 const formatKeyName = (name) => {
   return name
@@ -12,8 +12,9 @@ const formatKeyName = (name) => {
 };
 
 const fejk = async () => {
-  const request = await got('https://fejk.se/');
-  const $ = await cheerio.load(request.body);
+  const request = await fetch('https://fejk.se/');
+  const fejkData = await request.text();
+  const $ = cheerio.load(fejkData);
 
   function mapData() {
     const [key, value] = $(this).children().text().split(':');
